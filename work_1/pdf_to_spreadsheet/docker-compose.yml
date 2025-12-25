@@ -1,0 +1,47 @@
+version: '3.8'
+
+services:
+  pdf-api:
+    build: .
+    container_name: pdf-to-spreadsheet
+    ports:
+      - "8000:8000"
+    volumes:
+      # Mount local directories for persistent data
+      - ./input:/app/input
+      - ./output:/app/output
+      - ./uploads:/app/uploads
+      - ./logs:/app/logs
+      # Mount config file
+      - ./config.yaml:/app/config.yaml:ro
+    environment:
+      - PYTHONPATH=/app
+      - LOG_LEVEL=INFO
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+
+  # Optional: Folder watcher service
+  pdf-watcher:
+    build: .
+    container_name: pdf-watcher
+    command: python watcher.py --input /app/watch --output /app/output --format csv
+    volumes:
+      - ./watch:/app/watch
+      - ./output:/app/output
+      - ./config.yaml:/app/config.yaml:ro
+    environment:
+      - PYTHONPATH=/app
+    restart: unless-stopped
+    profiles:
+      - watcher  # Only start with: docker-compose --profile watcher up
+
+volumes:
+  input:
+  output:
+  uploads:
+  watch:

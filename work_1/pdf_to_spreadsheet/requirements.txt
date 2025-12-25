@@ -1,0 +1,49 @@
+# Core dependencies
+pdfplumber>=0.10.0
+PyPDF2>=3.0.0
+tabula-py>=2.8.0
+
+# Data processing
+pandas>=2.0.0
+numpy>=1.24.0
+
+# Text processing
+python-dateutil>=2.8.0
+babel>=2.12.0
+
+# CLI
+click>=8.1.0
+colorama>=0.4.6
+
+# Configuration
+pyyaml>=6.0.0
+
+# Logging
+loguru>=0.7.0
+
+# API Server
+fastapi>=0.104.0
+uvicorn>=0.24.0
+python-multipart>=0.0.6
+
+# Excel Export
+openpyxl>=3.1.0
+
+# Folder Watcher
+watchdog>=3.0.0
+
+# OCR (optional - requires Tesseract installed)
+# pytesseract>=0.3.10
+# Pillow>=10.0.0
+
+# Google Sheets (optional)
+# google-auth>=2.22.0
+# google-auth-oauthlib>=1.0.0
+# gspread>=5.10.0
+
+# Development / Testing
+pytest>=7.4.0
+pytest-cov>=4.1.0
+flake8>=6.1.0
+black>=23.7.0
+

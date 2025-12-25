@@ -1,0 +1,4 @@
+invoice_id,date,vendor,client,tax_id,subtotal,tax,total,items_count
+INV-2024-001,2024-03-15,TechCorp Solutions S.A. de C.V.,Empresa Cliente 1 SA,TCS123456ABC,10100.00,1616.00,11716.00,4
+INV-2024-002,2024-03-20,TechCorp Solutions S.A. de C.V.,Empresa Cliente 2 SA,TCS123456ABC,12400.00,1984.00,14384.00,5
+INV-2024-003,2024-03-25,TechCorp Solutions S.A. de C.V.,Empresa Cliente 3 SA,TCS123456ABC,9500.00,1520.00,11020.00,3

@@ -1,0 +1,49 @@
+[
+    {
+        "metadata": {
+            "generated_at": "2024-03-15T10:30:45",
+            "record_count": 8,
+            "report_type": "sales"
+        }
+    },
+    {
+        "id": "V001",
+        "vendedor": "Juan Perez",
+        "region": "Norte",
+        "ventas": 45000.00,
+        "comision": 4500.00,
+        "fecha": "2024-01-05"
+    },
+    {
+        "id": "V002",
+        "vendedor": "Maria Garcia",
+        "region": "Sur",
+        "ventas": 38000.00,
+        "comision": 3800.00,
+        "fecha": "2024-01-08"
+    },
+    {
+        "id": "V003",
+        "vendedor": "Carlos Lopez",
+        "region": "Centro",
+        "ventas": 52000.00,
+        "comision": 5200.00,
+        "fecha": "2024-01-12"
+    },
+    {
+        "id": "V004",
+        "vendedor": "Ana Martinez",
+        "region": "Este",
+        "ventas": 41000.00,
+        "comision": 4100.00,
+        "fecha": "2024-01-15"
+    },
+    {
+        "id": "V005",
+        "vendedor": "Roberto Sanchez",
+        "region": "Oeste",
+        "ventas": 35000.00,
+        "comision": 3500.00,
+        "fecha": "2024-01-18"
+    }
+]

@@ -1,0 +1,177 @@
+# =============================================================================
+# PDF to Spreadsheet Automation - Configuracion Principal
+# =============================================================================
+
+# -----------------------------------------------------------------------------
+# Rutas del sistema
+# -----------------------------------------------------------------------------
+paths:
+  input: "./input"
+  output: "./output"
+  logs: "./logs"
+
+# -----------------------------------------------------------------------------
+# Configuracion de salida
+# -----------------------------------------------------------------------------
+output:
+  default_format: "csv"
+  
+  csv:
+    delimiter: ","
+    encoding: "utf-8"
+    include_header: true
+    quoting: "minimal"  # minimal, all, none, nonnumeric
+  
+  json:
+    indent: 2
+    ensure_ascii: false
+    orient: "records"  # records, index, columns
+  
+  gsheet:
+    enabled: false
+    credentials_file: "./credentials/gsheet_credentials.json"
+    spreadsheet_name: "PDF_Extractions"
+    worksheet_name: "Data"
+
+# -----------------------------------------------------------------------------
+# Configuracion de extraccion
+# -----------------------------------------------------------------------------
+extraction:
+  # Estrategia de extraccion: text_first, table_first, auto
+  strategy: "auto"
+  
+  # Intentar extraer tablas primero
+  prefer_tables: true
+  
+  # Usar OCR si el PDF es escaneado (requiere Tesseract)
+  ocr_fallback: true
+  ocr_language: "spa+eng"
+  ocr_dpi: 300
+  
+  # Limites
+  max_pages: 100
+  timeout_seconds: 60
+
+# -----------------------------------------------------------------------------
+# Parsers disponibles
+# -----------------------------------------------------------------------------
+parsers:
+  # Parser de facturas
+  invoice:
+    enabled: true
+    auto_detect: true
+    keywords:
+      - "factura"
+      - "invoice"
+      - "total"
+      - "subtotal"
+    validation:
+      invoice_id:
+        type: "string"
+        required: true
+      date:
+        type: "date"
+        required: true
+        formats:
+          - "%d/%m/%Y"
+          - "%Y-%m-%d"
+          - "%d-%m-%Y"
+      total:
+        type: "number"
+        required: true
+        min: 0
+      vendor:
+        type: "string"
+        required: false
+  
+  # Parser de reportes tabulares
+  report:
+    enabled: true
+    auto_detect: true
+    keywords:
+      - "reporte"
+      - "informe"
+      - "tabla"
+      - "report"
+    validation:
+      # Validacion generica para tablas
+      _any_column:
+        allow_empty: false
+        max_length: 500
+
+# -----------------------------------------------------------------------------
+# Normalizacion de datos
+# -----------------------------------------------------------------------------
+normalization:
+  dates:
+    output_format: "%Y-%m-%d"
+    input_formats:
+      - "%d/%m/%Y"
+      - "%d-%m-%Y"
+      - "%Y/%m/%d"
+      - "%Y-%m-%d"
+      - "%d de %B de %Y"
+      - "%B %d, %Y"
+  
+  numbers:
+    decimal_separator: "."
+    thousands_separator: ","
+    currency_symbols:
+      - "$"
+      - "USD"
+      - "MXN"
+      - "EUR"
+  
+  text:
+    strip_whitespace: true
+    normalize_unicode: true
+    lowercase_headers: true
+    remove_special_chars: false
+
+# -----------------------------------------------------------------------------
+# Validacion
+# -----------------------------------------------------------------------------
+validation:
+  enabled: true
+  
+  # Reglas globales
+  rules:
+    # Totales no pueden ser negativos
+    non_negative_totals: true
+    
+    # Fechas deben ser validas
+    valid_dates: true
+    
+    # IDs unicos
+    unique_ids: true
+  
+  # Accion ante errores: skip, warn, fail
+  on_error: "warn"
+  
+  # Umbral de errores para fallar
+  max_errors: 10
+
+# -----------------------------------------------------------------------------
+# Deduplicacion
+# -----------------------------------------------------------------------------
+deduplication:
+  enabled: true
+  # Columnas para detectar duplicados (vacio = todas)
+  key_columns: []
+  # Estrategia: first, last, none
+  keep: "first"
+
+# -----------------------------------------------------------------------------
+# Logging
+# -----------------------------------------------------------------------------
+logging:
+  level: "INFO"  # DEBUG, INFO, WARNING, ERROR
+  format: "{time:YYYY-MM-DD HH:mm:ss} | {level: <8} | {message}"
+  rotation: "10 MB"
+  retention: "7 days"
+  
+  # Log a consola
+  console: true
+  
+  # Log a archivo
+  file: true
