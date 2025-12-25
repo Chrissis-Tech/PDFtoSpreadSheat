@@ -414,4 +414,5 @@ MIT License - see [LICENSE](LICENSE)
 ## Contact
 
 - Issues: [GitHub Issues](https://github.com/your-username/pdf-to-spreadsheet/issues)
-- Email: your-email@example.com
+- Email: chrisdeleongarcia@gmail.com
+
